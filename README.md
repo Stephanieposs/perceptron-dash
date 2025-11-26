@@ -44,9 +44,21 @@ python app.py
 2. Envie um CSV (suporta vírgula ou ponto e vírgula; cabeçalho opcional).
 3. Ajuste taxa de aprendizado (η) e número de épocas.
 4. Use os botões: Próxima Época, Rodar Treinamento Completo, Rodar até Convergir, Reset.
+   - Pesos e bias são gerados aleatoriamente na criação do perceptron e em cada Reset (sem semente fixa, portanto valores variam a cada inicialização).
+   - Próxima Época: roda uma época por clique.
+   - Rodar Treinamento Completo: roda até atingir o limite de épocas configurado.
+   - Rodar até Convergir: roda até convergir (0 erros) ou até 5000 épocas.
 
 ## Estrutura
 - `app.py`: rotas Flask e controle do Perceptron.
 - `perceptron_puro.py`: implementação do Perceptron puro.
 - `templates/`: HTML principal.
 - `static/`: CSS, JS e assets.
+
+## Como o Perceptron calcula
+Para cada amostra `x`:
+- Faz o somatório (produto interno) `z = sum(w_i * x_i) + b`.
+- Ativação degrau: `previsto = 1 se z >= 0, senão 0`.
+- Erro: `erro = esperado - previsto` (–1, 0 ou 1).
+- Se houve erro, ajusta pesos/bias: `w_i ← w_i + η * erro * x_i` e `b ← b + η * erro`.
+- Uma época percorre todas as amostras; convergiu quando uma época termina com 0 erros.
