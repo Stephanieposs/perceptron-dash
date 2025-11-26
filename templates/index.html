@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perceptron Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Perceptron Puro</p>
+                <h1>Dashboard Interativo</h1>
+                <p class="muted">Envie um CSV, ajuste hiperparâmetros e acompanhe cada passo do treinamento.</p>
+            </div>
+            <div class="upload-box">
+                <label class="file-label">
+                    <input type="file" id="csvfile" accept=".csv">
+                    <span>Selecionar CSV</span>
+                </label>
+                <button class="btn btn-primary" id="uploadBtn">Enviar</button>
+                <span class="status-pill" id="uploadStatus">Nenhum arquivo</span>
+            </div>
+        </header>
+
+        <div class="grid">
+            <div class="column">
+                <section class="card">
+                    <div class="card-header">
+                        <div>
+                            <p class="eyebrow">Dataset</p>
+                            <h2>Dados de Treinamento</h2>
+                        </div>
+                        <span class="badge" id="datasetCount">0 amostras</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="dados-table">
+                            <thead id="dados-head"></thead>
+                            <tbody id="dados-body">
+                                <tr class="placeholder">
+                                    <td>Envie um CSV para visualizar as amostras.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="card log-card">
+                    <div class="card-header">
+                        <div>
+                            <p class="eyebrow">Monitoramento</p>
+                            <h2>Log</h2>
+                        </div>
+                        <button class="minimal-btn" id="clearLogBtn">Limpar</button>
+                    </div>
+                    <pre id="logContent">Aguardando início do treinamento.</pre>
+                </section>
+            </div>
+
+            <div class="column">
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Controles</h2>
+                        <button class="btn btn-icon btn-reset" id="resetBtn" title="Reiniciar">
+                            <img src="{{ url_for('static', filename='img/reset.png') }}" alt="Reiniciar" width="20" height="20">
+                        </button>
+                    </div>
+                    <div class="controls">
+                        <div class="control-row">
+                            <label>Taxa de Aprendizado (η): <span id="etaValue">0.10</span></label>
+                            <input type="range" id="etaSlider" min="0.01" max="1" step="0.01" value="0.10">
+                        </div>
+                        <div class="control-row">
+                            <label>Critério de Parada (Épocas):</label>
+                            <input id="max_epoch" type="number" value="50" min="1" max="5000">
+                        </div>
+                        <div class="control-actions">
+                            <button class="btn btn-green" id="epochBtn">Próxima Época</button>
+                            <button class="btn btn-purple" id="fullBtn">Rodar Treinamento Completo</button>
+                            <button class="btn btn-purple" id="convergeBtn">Rodar até Convergir</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Estado Atual</h2>
+                    </div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span>Época:</span>
+                            <strong id="epochValue">0</strong>
+                        </div>
+                        <div class="info-item">
+                            <span>Amostra:</span>
+                            <strong id="sampleValue">-</strong>
+                        </div>
+                        <div class="info-item">
+                            <span>Taxa de Aprendizado (η):</span>
+                            <strong id="etaCurrent">0.10</strong>
+                        </div>
+                        <div class="info-item">
+                            <span>Critério de Parada:</span>
+                            <strong id="stopValue">0 épocas</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Pesos Atuais</h2>
+                    </div>
+                    <div class="weights">
+                        <div id="weightsContainer">
+                            <p class="muted">Nenhum peso calculado ainda.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <h2>Erros por Época</h2>
+                    </div>
+                    <div class="errors" id="errorsList">
+                        <p class="muted">Nenhum treino executado.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
