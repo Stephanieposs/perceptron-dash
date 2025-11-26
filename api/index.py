@@ -1,6 +1,13 @@
+import sys
+import traceback
 from app import app
-from asgiref.wsgi import WsgiToAsgi
+from vercel_wsgi import handle
 
-# Converte sua app Flask (WSGI) para ASGI
-handler = WsgiToAsgi(app)
 
+def handler(event, context):
+    try:
+        return handle(event, context, app)
+    except Exception as exc:  # log erros para inspeção na Vercel
+        print(f"[handler] erro: {exc}", file=sys.stderr)
+        traceback.print_exc()
+        raise
