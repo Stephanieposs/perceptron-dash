@@ -23,6 +23,22 @@ python app.py
 - O server sobe em http://127.0.0.1:5000/ (ou na porta definida em `PORT`).
 - O app serve `templates/` e `static/` automaticamente.
 
+### Alterar a porta (caso precise alterar localmente)
+- PowerShell:
+  ```ps1
+  $env:PORT = 8000
+  python app.py
+  ```
+- Prompt (cmd):
+  ```bat
+  set PORT=8000
+  python app.py
+  ```
+- Bash/Zsh:
+  ```bash
+  PORT=8000 python app.py
+  ```
+
 ## Uso
 1. Acesse a URL no navegador.
 2. Envie um CSV (suporta vírgula ou ponto e vírgula; cabeçalho opcional).
