@@ -1,16 +1,12 @@
 """
-Ponto de entrada serverless para a Vercel usando vercel-wsgi.
+Ponto de entrada serverless para a Vercel.
+Exponha um ASGI callable chamado `app`. O Flask (WSGI) é adaptado via asgiref.
 """
-import sys
-import traceback
-from app import app
-from vercel_wsgi import handle
+from asgiref.wsgi import WsgiToAsgi
+from app import app as flask_app
 
+# Vercel espera um callable ASGI chamado `app`
+app = WsgiToAsgi(flask_app)
 
-def handler(event, context):
-    try:
-        return handle(event, context, app)
-    except Exception as exc:
-        print(f"[handler] erro: {exc}", file=sys.stderr)
-        traceback.print_exc()
-        raise
+# Alias opcional para compatibilidade
+handler = app
