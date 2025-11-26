@@ -1,6 +1,6 @@
 from app import app
-from vercel_wsgi import handler
+from asgiref.wsgi import WsgiToAsgi
 
+# Converte sua app Flask (WSGI) para ASGI
+handler = WsgiToAsgi(app)
 
-def main(request, *args, **kwargs):
-    return handler(app, request, *args, **kwargs)
