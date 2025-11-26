@@ -1,13 +1,8 @@
-import sys
-import traceback
+"""
+Ponto de entrada para a função serverless na Vercel.
+Expõe a app Flask como WSGI callable; o runtime da Vercel detecta `app`.
+"""
 from app import app
-from vercel_wsgi import handle
 
-
-def handler(event, context):
-    try:
-        return handle(event, context, app)
-    except Exception as exc:  # log erros para inspeção na Vercel
-        print(f"[handler] erro: {exc}", file=sys.stderr)
-        traceback.print_exc()
-        raise
+# Para compatibilidade explícita (alguns exemplos usam `handler`):
+handler = app
